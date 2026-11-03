@@ -153,20 +153,20 @@ el.disabled=true;if(k===t.c)el.classList.add("good");
 });
 if(n===t.c){xp+=10;correct++;$("feedback").innerHTML='<div class="feedback">🎉 <b>Правильно!</b><br>'+t.e+'<br>+10 XP</div>'}
 else{b.classList.add("bad");$("feedback").innerHTML='<div class="feedback">💡 <b>Разберём ошибку:</b><br>'+t.e+'</div>'}
-$("xp").textContent=xp;$("correct").textContent=correct;$("total").textContent=total;
-  saveProgress();
+$("xp").textContent=xp;
+$("correct").textContent=correct;
+$("total").textContent=total;
+updateLevel();
+saveProgress();
 $("next").disabled=false;
 }
 $("next").onclick=()=>{i++;saveProgress();render()};
-
 $("xp").textContent=xp;
 $("level").textContent=getLevel();
 $("correct").textContent=correct;
 $("total").textContent=total;
  updateLevel();
-
 render();
-
 </script>
 </body>
 </html>
