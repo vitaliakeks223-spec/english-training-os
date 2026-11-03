@@ -115,7 +115,6 @@ const tasks=[
 const saved=JSON.parse(localStorage.getItem("englishTrainingOS")||"{}");
 let i=saved.i||0,xp=saved.xp||0,correct=saved.correct||0,total=saved.total||0,answered=false;
 
-
 function getLevel(){
  return Math.floor(xp/100)+1;
 }
@@ -131,7 +130,6 @@ function getLevelName(){
  return names[getLevel()-1]||"👑 English Legend";
 }
 
- 
 function updateLevel(){
  const levelXP=xp%100;
  $("levelFill").style.width=levelXP+"%";
@@ -169,8 +167,6 @@ else{b.classList.add("bad");$("feedback").innerHTML='<div class="feedback">💡 
 $("xp").textContent=xp;
 $("correct").textContent=correct;
 $("total").textContent=total;
-updateLevel();
-saveProgress();
 $("next").disabled=false;
 updateLevel();
 saveProgress();
