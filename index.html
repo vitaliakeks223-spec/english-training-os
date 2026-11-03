@@ -234,7 +234,6 @@ function updateLevel(){
  $("level").textContent=getLevelName();
 }
 
-
 function saveProgress(){
  localStorage.setItem("englishTrainingOS",JSON.stringify({i,xp,correct,total}));
 }
@@ -256,28 +255,6 @@ function selectLesson(number){
 
  i = 0;
  saveProgress();
- render();
-}
-
-function render(){
-}
-
-let activeLesson = 0;
-
-function selectLesson(number){
- if(number !== 0){
-  $("feedback").innerHTML =
-   '<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
-  return;
- }
-
- activeLesson = number;
-
- document.querySelectorAll(".lesson").forEach((btn,index)=>{
-  btn.classList.toggle("active",index===number);
- });
-
- i = 0;
  render();
 }
 function render(){
