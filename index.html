@@ -17,10 +17,38 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 .eyebrow{color:#a8a3ff;font-size:12px;font-weight:700;letter-spacing:1px}
 h1{font-size:29px;line-height:1.2;margin:12px 0}
 p{color:#aeb7d5;line-height:1.5}
-.stats{display:flex;gap:10px;margin-top:20px}
-.stat{background:#10162b;border-radius:14px;padding:12px;flex:1}
-.stat small{display:block;color:#929cbd;font-size:12px}
-.stat strong{font-size:22px}
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:10px;
+ margin-top:20px;
+}
+
+.stat{
+ background:#10162b;
+ border-radius:14px;
+ padding:12px;
+ min-width:0;
+}
+
+.stat small{
+ display:block;
+ color:#929cbd;
+ font-size:12px;
+}
+
+.stat strong{
+ display:block;
+ font-size:22px;
+ line-height:1.2;
+ overflow-wrap:anywhere;
+}
+
+@media(max-width:600px){
+ .stats{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+}
 .card{background:#141b30;border:1px solid #293451;border-radius:22px;padding:22px;margin:16px 0}
 .tag{color:#a59cff;font-size:12px;font-weight:700}
 .question{font-size:24px;font-weight:750;line-height:1.35;margin:18px 0}
