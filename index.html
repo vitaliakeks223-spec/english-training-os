@@ -240,10 +240,10 @@ function saveProgress(){
 }
 
 const $=id=>document.getElementById(id);
- let activeLesson = 0;
+
+let activeLesson = 0;
 
 function selectLesson(number){
-
  if(number !== 0){
   $("feedback").innerHTML =
    '<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
@@ -259,6 +259,9 @@ function selectLesson(number){
  i = 0;
  saveProgress();
  render();
+}
+
+function render(){
 }
 
 let activeLesson = 0;
