@@ -71,7 +71,7 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
 
 <div class="stats">
 <div class="stat"><small>⭐ Твой XP</small><strong id="xp">0</strong></div>
-<div class="stat"><small>🏆 Уровень</small><strong id="level">1</strong></div>
+<div class="stat"><small>🏆 Уровень</small><strong id="level">🥚 Beginner</strong></div>
 <div class="stat"><small>🎯 Правильно</small><strong id="correct">0</strong></div>
 <div class="stat"><small>📚 Задания</small><strong id="total">0</strong></div>
 </div>
@@ -115,9 +115,22 @@ const tasks=[
 const saved=JSON.parse(localStorage.getItem("englishTrainingOS")||"{}");
 let i=saved.i||0,xp=saved.xp||0,correct=saved.correct||0,total=saved.total||0,answered=false;
 
+
 function getLevel(){
  return Math.floor(xp/100)+1;
 }
+
+function getLevelName(){
+ const names=[
+  "🥚 Beginner",
+  "📘 Apprentice",
+  "⚔️ English Warrior",
+  "🔥 English Master",
+  "👑 English Legend"
+ ];
+ return names[getLevel()-1]||"👑 English Legend";
+}
+
  
 function updateLevel(){
  const levelXP=xp%100;
@@ -165,7 +178,7 @@ $("next").disabled=false;
 }
 $("next").onclick=()=>{i++;saveProgress();render()};
 $("xp").textContent=xp;
-$("level").textContent=getLevel();
+$("level").textContent=getLevelName();
 $("correct").textContent=correct;
 $("total").textContent=total;
  updateLevel();
