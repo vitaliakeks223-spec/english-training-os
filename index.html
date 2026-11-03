@@ -129,16 +129,21 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
 
 <script>
 const tasks=[
-{q:"I ___ a student.",h:"Я студент. Выбери правильную форму to be.",a:["am","is","are"],c:0,e:"С I используем am: I am a student."},
-{q:"She ___ coffee every morning.",h:"Она пьёт кофе каждое утро.",a:["drink","drinks","drinking"],c:1,e:"С he / she / it в Present Simple добавляем -s: drinks."},
-{q:"___ you like music?",h:"Ты любишь музыку?",a:["Does","Do","Are"],c:1,e:"С you используем Do: Do you like music?"},
-{q:"This is ___ phone.",h:"Это мой телефон.",a:["I","me","my"],c:2,e:"My = мой. My phone — мой телефон."},
-{q:"He ___ not work on Sundays.",h:"Он не работает по воскресеньям.",a:["don't","doesn't","isn't"],c:1,e:"С he используем doesn't: He doesn't work."},
-{q:"They ___ happy.",h:"Они счастливы.",a:["is","am","are"],c:2,e:"С they используем are: They are happy."},
-{q:"I ___ English every day.",h:"Я изучаю английский каждый день.",a:["study","studies","studying"],c:0,e:"С I используем study без окончания -s."},
-{q:"Where ___ you live?",h:"Где ты живёшь?",a:["does","do","are"],c:1,e:"Where do you live? С you используем do."},
-{q:"She is ___ friend.",h:"Она моя подруга.",a:["mine","my","me"],c:1,e:"Перед существительным используем my: my friend."},
-{q:"We ___ from Russia.",h:"Мы из России.",a:["is","are","am"],c:1,e:"We are — мы есть / мы находимся."}
+{q:"Как переводится I?",h:"Личное местоимение.",a:["Я","Ты","Он"],c:0,e:"I = я."},
+{q:"___ am happy.",h:"Я счастлив.",a:["He","I","They"],c:1,e:"С I используем am: I am happy."},
+{q:"Как переводится She?",h:"Личное местоимение.",a:["Он","Она","Оно"],c:1,e:"She = она."},
+{q:"Tom is my friend. ___ is kind.",h:"Том — мой друг. Он добрый.",a:["He","She","It"],c:0,e:"Tom — мужчина, поэтому используем He."},
+{q:"Anna is a student. ___ is smart.",h:"Анна — студентка.",a:["He","It","She"],c:2,e:"Anna — девушка, поэтому She."},
+{q:"The dog is small. ___ is cute.",h:"Собака маленькая. Она милая.",a:["He","It","They"],c:1,e:"Для животных, когда не уточняем пол, используем It."},
+{q:"Как переводится We?",h:"Личное местоимение.",a:["Они","Мы","Вы"],c:1,e:"We = мы."},
+{q:"My brother and I = ___",h:"Мой брат и я.",a:["They","We","You"],c:1,e:"My brother and I = We (мы)."},
+{q:"Как переводится They?",h:"Личное местоимение.",a:["Они","Мы","Вы"],c:0,e:"They = они."},
+{q:"Mike and John are friends. ___ are happy.",h:"Майк и Джон — друзья.",a:["He","We","They"],c:2,e:"Два человека — They."},
+{q:"___ are my best friend.",h:"Ты мой лучший друг.",a:["You","He","We"],c:0,e:"You = ты / вы."},
+{q:"Выбери правильный перевод: Она дома.",h:"She is at home.",a:["He is at home.","She is at home.","They are at home."],c:1,e:"She = она."},
+{q:"My parents are nice. ___ are kind.",h:"Мои родители хорошие.",a:["We","They","It"],c:1,e:"Parents — родители, множественное число: They."},
+{q:"The book is new. ___ is interesting.",h:"Книга новая. Она интересная.",a:["It","She","He"],c:0,e:"Для предметов используем It."},
+{q:"Выбери правильное предложение.",h:"Мы счастливы.",a:["We is happy.","We am happy.","We are happy."],c:2,e:"С We используем are: We are happy."}
 ];
 
 const saved=JSON.parse(localStorage.getItem("englishTrainingOS")||"{}");
