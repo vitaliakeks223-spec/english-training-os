@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -119,9 +120,11 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
 </div>
 
 <script>
-const $=id=>document.getElementById(id);
+"use strict";
 
-const tasks=[
+const $ = id => document.getElementById(id);
+
+const tasks = [
 {q:"Как переводится I?",h:"Личное местоимение.",a:["Я","Ты","Он"],c:0,e:"I = я."},
 {q:"___ am happy.",h:"Я счастлив.",a:["He","I","They"],c:1,e:"С I используем am: I am happy."},
 {q:"Как переводится She?",h:"Личное местоимение.",a:["Он","Она","Оно"],c:1,e:"She = она."},
@@ -139,121 +142,163 @@ const tasks=[
 {q:"Выбери правильное предложение.",h:"Мы счастливы.",a:["We is happy.","We am happy.","We are happy."],c:2,e:"С We используем are: We are happy."}
 ];
 
-const saved=JSON.parse(localStorage.getItem("englishTrainingOS")||"{}");
-let i=saved.i||0;
-let xp=saved.xp||0;
-let correct=saved.correct||0;
-let total=saved.total||0;
-let answered=false;
-let activeLesson=0;
+// Безопасно загружаем сохранённый прогресс
+let saved = {};
+
+try {
+const raw = localStorage.getItem("englishTrainingOS");
+if (raw) {
+const parsed = JSON.parse(raw);
+if (parsed && typeof parsed === "object") {
+saved = parsed;
+}
+}
+} catch (error) {
+console.warn("Не удалось прочитать сохранённый прогресс:", error);
+}
+
+let i = Number.isFinite(Number(saved.i)) ? Math.max(0, Number(saved.i)) : 0;
+let xp = Number.isFinite(Number(saved.xp)) ? Math.max(0, Number(saved.xp)) : 0;
+let correct = Number.isFinite(Number(saved.correct)) ? Math.max(0, Number(saved.correct)) : 0;
+let total = Number.isFinite(Number(saved.total)) ? Math.max(0, Number(saved.total)) : 0;
+
+let answered = false;
+let activeLesson = 0;
 
 function getLevel(){
-return Math.floor(xp/100)+1;
+return Math.floor(xp / 100) + 1;
 }
 
 function getLevelName(){
-const names=[
+const names = [
 "🥚 Beginner",
 "📘 Apprentice",
 "⚔️ English Warrior",
 "🔥 English Master",
 "👑 English Legend"
 ];
-return names[getLevel()-1]||"👑 English Legend";
+return names[getLevel() - 1] || "👑 English Legend";
 }
 
 function updateLevel(){
-const levelXP=xp%100;
-$("levelFill").style.width=levelXP+"%";
-$("levelXP").textContent=levelXP+" / 100 XP";
-$("level").textContent=getLevelName();
+const levelXP = xp % 100;
+$("levelFill").style.width = levelXP + "%";
+$("levelXP").textContent = levelXP + " / 100 XP";
+$("level").textContent = getLevelName();
 }
 
 function saveProgress(){
-localStorage.setItem("englishTrainingOS",JSON.stringify({i,xp,correct,total}));
+try {
+localStorage.setItem("englishTrainingOS", JSON.stringify({
+i: i,
+xp: xp,
+correct: correct,
+total: total
+}));
+} catch (error) {
+console.warn("Не удалось сохранить прогресс:", error);
+}
 }
 
 function selectLesson(number){
-if(number!==0){
-$("feedback").innerHTML='<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
+if(number !== 0){
+$("feedback").innerHTML = '<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
 return;
 }
 
-activeLesson=number;
+activeLesson = number;
 
-document.querySelectorAll(".lesson").forEach((btn,index)=>{
-btn.classList.toggle("active",index===number);
+document.querySelectorAll(".lesson").forEach((btn, index) => {
+btn.classList.toggle("active", index === number);
 });
 
-i=0;
+i = 0;
 saveProgress();
 render();
 }
 
 function render(){
-const t=tasks[i%tasks.length];
-answered=false;
-$("topic").textContent="GRAMMAR · A1 · "+(i%tasks.length+1);
-$("question").textContent=t.q;
-$("hint").textContent=t.h;
-$("feedback").innerHTML="";
-$("next").disabled=true;
-$("bar").style.width=((i%tasks.length+1)/tasks.length*100)+"%";
-$("answers").innerHTML="";
+const taskIndex = i % tasks.length;
+const t = tasks[taskIndex];
 
-t.a.forEach((a,n)=>{
-let b=document.createElement("button");
-b.className="answer";
-b.textContent=a;
-b.onclick=()=>check(n,b);
-$("answers").appendChild(b);
+answered = false;
+
+$("topic").textContent = "GRAMMAR · A1 · " + (taskIndex + 1);
+$("question").textContent = t.q;
+$("hint").textContent = t.h;
+$("feedback").innerHTML = "";
+$("next").disabled = true;
+$("bar").style.width = ((taskIndex + 1) / tasks.length * 100) + "%";
+$("answers").innerHTML = "";
+
+t.a.forEach((answer, n) => {
+const button = document.createElement("button");
+button.className = "answer";
+button.textContent = answer;
+button.type = "button";
+button.onclick = () => check(n, button);
+$("answers").appendChild(button);
 });
 
-$("next").textContent="Следующее задание →";
+$("next").textContent = "Следующее задание →";
 }
 
-function check(n,b){
-if(answered)return;
-answered=true;
+function check(n, button){
+if(answered) return;
+
+answered = true;
 total++;
 
-const t=tasks[i%tasks.length];
+const t = tasks[i % tasks.length];
 
-document.querySelectorAll(".answer").forEach((el,k)=>{
-el.disabled=true;
-if(k===t.c)el.classList.add("good");
+document.querySelectorAll(".answer").forEach((element, index) => {
+element.disabled = true;
+
+if(index === t.c){
+element.classList.add("good");
+}
 });
 
-if(n===t.c){
-xp+=10;
+if(n === t.c){
+xp += 10;
 correct++;
-$("feedback").innerHTML='<div class="feedback">🎉 <b>Правильно!</b><br>'+t.e+'<br>+10 XP</div>';
-}else{
-b.classList.add("bad");
-$("feedback").innerHTML='<div class="feedback">💡 <b>Разберём ошибку:</b><br>'+t.e+'</div>';
+
+$("feedback").innerHTML =
+'<div class="feedback">🎉 <b>Правильно!</b><br>' +
+t.e + '<br>+10 XP</div>';
+} else {
+button.classList.add("bad");
+
+$("feedback").innerHTML =
+'<div class="feedback">💡 <b>Разберём ошибку:</b><br>' +
+t.e + '</div>';
 }
 
-$("xp").textContent=xp;
-$("correct").textContent=correct;
-$("total").textContent=total;
+$("xp").textContent = xp;
+$("correct").textContent = correct;
+$("total").textContent = total;
+
 updateLevel();
 saveProgress();
-$("next").disabled=false;
+
+$("next").disabled = false;
 }
 
-$("next").onclick=()=>{
+$("next").onclick = () => {
 i++;
 saveProgress();
 render();
 };
 
-$("xp").textContent=xp;
-$("level").textContent=getLevelName();
-$("correct").textContent=correct;
-$("total").textContent=total;
+// Первоначальная отрисовка страницы
+$("xp").textContent = xp;
+$("level").textContent = getLevelName();
+$("correct").textContent = correct;
+$("total").textContent = total;
 
 updateLevel();
 render();
+
 </script>
 
 </body>
