@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Training OS</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f4f6ff;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.wrap{max-width:650px;margin:auto;padding:22px 16px 45px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.logo{font-weight:900;font-size:20px;letter-spacing:-1px}
+.logo span{color:#8b83ff}
+.pill{background:#1c2440;padding:9px 13px;border-radius:20px;font-size:13px;color:#c6caff}
+.hero{background:linear-gradient(135deg,#28265b,#171d39);border:1px solid #343765;border-radius:24px;padding:24px;margin-bottom:18px}
+.eyebrow{color:#a8a3ff;font-size:12px;font-weight:700;letter-spacing:1px}
+h1{font-size:29px;line-height:1.2;margin:12px 0}
+p{color:#aeb7d5;line-height:1.5}
+.stats{display:flex;gap:10px;margin-top:20px}
+.stat{background:#10162b;border-radius:14px;padding:12px;flex:1}
+.stat small{display:block;color:#929cbd;font-size:12px}
+.stat strong{font-size:22px}
+.card{background:#141b30;border:1px solid #293451;border-radius:22px;padding:22px;margin:16px 0}
+.tag{color:#a59cff;font-size:12px;font-weight:700}
+.question{font-size:24px;font-weight:750;line-height:1.35;margin:18px 0}
+.hint{font-size:14px;color:#98a5c8}
+.answers{display:grid;gap:10px;margin-top:20px}
+.answer{background:#202944;border:1px solid #34415e;color:#f4f6ff;padding:16px;border-radius:14px;text-align:left;font-size:16px}
+.answer:disabled{opacity:1}
+.answer.good{border-color:#36d99a;background:#123b35}
+.answer.bad{border-color:#ff718a;background:#44202d}
+.feedback{margin-top:16px;line-height:1.5;padding:14px;border-radius:14px;background:#202944}
+button{cursor:pointer}
+.next{width:100%;background:#8277ff;border:0;border-radius:15px;padding:16px;color:white;font-size:16px;font-weight:700;margin-top:16px}
+.next:disabled{opacity:.4}
+.progress{height:7px;background:#26304a;border-radius:9px;margin-top:18px;overflow:hidden}
+.bar{height:100%;width:0;background:#8b83ff;transition:.3s}
+footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="logo">ENGLISH <span>TRAINING OS</span></div>
+<div class="pill">LEVEL A1–A2</div>
+</header>
+
+<section class="hero">
+<div class="eyebrow">YOUR PERSONAL ENGLISH QUEST</div>
+<h1>Прокачиваем<br>твой английский 🚀</h1>
+<p>Учись, выполняй задания и получай опыт. Начинаем с простого.</p>
+<div class="stats">
+<div class="stat"><small>⭐ Твой XP</small><strong id="xp">0</strong></div>
+<div class="stat"><small>🎯 Правильно</small><strong id="correct">0</strong></div>
+<div class="stat"><small>📚 Задания</small><strong id="total">0</strong></div>
+</div>
+</section>
+
+<section class="card">
+<div class="tag" id="topic">GRAMMAR · A1</div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="question" id="question"></div>
+<div class="hint" id="hint"></div>
+<div class="answers" id="answers"></div>
+<div id="feedback"></div>
+<button class="next" id="next" disabled>Следующее задание →</button>
+</section>
+
+<footer>ENGLISH TRAINING OS · VERSION 1.0</footer>
+</div>
+
+<script>
+const tasks=[
+{q:"I ___ a student.",h:"Я студент. Выбери правильную форму to be.",a:["am","is","are"],c:0,e:"С I используем am: I am a student."},
+{q:"She ___ coffee every morning.",h:"Она пьёт кофе каждое утро.",a:["drink","drinks","drinking"],c:1,e:"С he / she / it в Present Simple добавляем -s: drinks."},
+{q:"___ you like music?",h:"Ты любишь музыку?",a:["Does","Do","Are"],c:1,e:"С you используем Do: Do you like music?"},
+{q:"This is ___ phone.",h:"Это мой телефон.",a:["I","me","my"],c:2,e:"My = мой. My phone — мой телефон."},
+{q:"He ___ not work on Sundays.",h:"Он не работает по воскресеньям.",a:["don't","doesn't","isn't"],c:1,e:"С he используем doesn't: He doesn't work."},
+{q:"They ___ happy.",h:"Они счастливы.",a:["is","am","are"],c:2,e:"С they используем are: They are happy."},
+{q:"I ___ English every day.",h:"Я изучаю английский каждый день.",a:["study","studies","studying"],c:0,e:"С I используем study без окончания -s."},
+{q:"Where ___ you live?",h:"Где ты живёшь?",a:["does","do","are"],c:1,e:"Where do you live? С you используем do."},
+{q:"She is ___ friend.",h:"Она моя подруга.",a:["mine","my","me"],c:1,e:"Перед существительным используем my: my friend."},
+{q:"We ___ from Russia.",h:"Мы из России.",a:["is","are","am"],c:1,e:"We are — мы есть / мы находимся."}
+];
+let i=0,xp=0,correct=0,total=0,answered=false;
+const $=id=>document.getElementById(id);
+function render(){
+const t=tasks[i%tasks.length];answered=false;
+$("topic").textContent="GRAMMAR · A1 · "+(i+1);
+$("question").textContent=t.q;$("hint").textContent=t.h;
+$("feedback").innerHTML=""; $("next").disabled=true;
+$("bar").style.width=(i%tasks.length+1)/tasks.length*100+"%";
+$("answers").innerHTML="";
+t.a.forEach((a,n)=>{
+let b=document.createElement("button");b.className="answer";b.textContent=a;
+b.onclick=()=>check(n,b);$("answers").appendChild(b);
+});
+$("next").textContent="Следующее задание →";
+}
+function check(n,b){
+if(answered)return;answered=true;total++;
+const t=tasks[i%tasks.length];
+document.querySelectorAll(".answer").forEach((el,k)=>{
+el.disabled=true;if(k===t.c)el.classList.add("good");
+});
+if(n===t.c){xp+=10;correct++;$("feedback").innerHTML='<div class="feedback">🎉 <b>Правильно!</b><br>'+t.e+'<br>+10 XP</div>'}
+else{b.classList.add("bad");$("feedback").innerHTML='<div class="feedback">💡 <b>Разберём ошибку:</b><br>'+t.e+'</div>'}
+$("xp").textContent=xp;$("correct").textContent=correct;$("total").textContent=total;
+$("next").disabled=false;
+}
+$("next").onclick=()=>{i++;render()};
+render();
+</script>
+</body>
+</html>
