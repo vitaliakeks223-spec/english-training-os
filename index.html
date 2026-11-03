@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English Training OS</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b1020;color:#f4f6ff;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
@@ -14,44 +13,16 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 .logo{font-weight:900;font-size:20px;letter-spacing:-1px}
 .logo span{color:#8b83ff}
 .pill{background:#1c2440;padding:9px 13px;border-radius:20px;font-size:13px;color:#c6caff}
-.hero{background:linear-gradient(135deg,#28265b,#171d39);border:1px solid #343765;border-radius:24px;padding:24px;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:20px}
+.stat{background:#10162b;border-radius:14px;padding:12px;min-width:0}
+.stat small{display:block;color:#929cbd;font-size:12px}
+.stat strong{display:block;font-size:22px;line-height:1.2;overflow-wrap:anywhere}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{background:#141b30;border:1px solid #293451;border-radius:22px;padding:22px;margin:16px 0}
+.tag{color:#a59cff;font-size:12px;font-weight:700}
 .eyebrow{color:#a8a3ff;font-size:12px;font-weight:700;letter-spacing:1px}
 h1{font-size:29px;line-height:1.2;margin:12px 0}
 p{color:#aeb7d5;line-height:1.5}
-.stats{
- display:grid;
- grid-template-columns:repeat(4,minmax(0,1fr));
- gap:10px;
- margin-top:20px;
-}
-
-.stat{
- background:#10162b;
- border-radius:14px;
- padding:12px;
- min-width:0;
-}
-
-.stat small{
- display:block;
- color:#929cbd;
- font-size:12px;
-}
-
-.stat strong{
- display:block;
- font-size:22px;
- line-height:1.2;
- overflow-wrap:anywhere;
-}
-
-@media(max-width:600px){
- .stats{
-  grid-template-columns:repeat(2,minmax(0,1fr));
- }
-}
-.card{background:#141b30;border:1px solid #293451;border-radius:22px;padding:22px;margin:16px 0}
-.tag{color:#a59cff;font-size:12px;font-weight:700}
 .question{font-size:24px;font-weight:750;line-height:1.35;margin:18px 0}
 .hint{font-size:14px;color:#98a5c8}
 .answers{display:grid;gap:10px;margin-top:20px}
@@ -61,99 +32,58 @@ p{color:#aeb7d5;line-height:1.5}
 .answer.bad{border-color:#ff718a;background:#44202d}
 .feedback{margin-top:16px;line-height:1.5;padding:14px;border-radius:14px;background:#202944}
 button{cursor:pointer}
+button:disabled{cursor:not-allowed}
 .next{width:100%;background:#8277ff;border:0;border-radius:15px;padding:16px;color:white;font-size:16px;font-weight:700;margin-top:16px}
 .next:disabled{opacity:.4}
 .progress{height:7px;background:#26304a;border-radius:9px;margin-top:18px;overflow:hidden}
 .bar{height:100%;width:0;background:#8b83ff;transition:.3s}
 footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
-.level-progress{
- margin-top:15px;
-}
-.level-bar{
- height:10px;
- width:100%;
- background:#252538;
- border-radius:10px;
- overflow:hidden;
- margin:8px 0;
-}
-#levelFill{
- width:0%;
- height:10px;
- background:linear-gradient(90deg,#7c3aed,#06b6d4);
- border-radius:10px;
- transition:width .3s;
-}
- 
-.lesson-list{
- display:grid;
- gap:10px;
- margin-top:18px;
-}
-
-.lesson{
- width:100%;
- text-align:left;
- padding:15px;
- border:1px solid #293451;
- border-radius:12px;
- background:#10162b;
- color:white;
- cursor:pointer;
-}
-
-.lesson span{
- display:block;
- font-size:15px;
- font-weight:700;
-}
-
-.lesson small{
- display:block;
- margin-top:6px;
- color:#929cbd;
-}
-
-.lesson.active{
- border-color:#7c6cff;
- background:#191b3a;
-}
-
+.level-progress{margin-top:15px}
+.level-bar{height:10px;width:100%;background:#252538;border-radius:10px;overflow:hidden;margin:8px 0}
+#levelFill{width:0%;height:10px;background:linear-gradient(90deg,#7c3aed,#06b6d4);border-radius:10px;transition:width .3s}
+.lesson-list{display:grid;gap:10px;margin-top:18px}
+.lesson{width:100%;text-align:left;padding:15px;border:1px solid #293451;border-radius:12px;background:#10162b;color:white;cursor:pointer}
+.lesson span{display:block;font-size:15px;font-weight:700}
+.lesson small{display:block;margin-top:6px;color:#929cbd}
+.lesson.active{border-color:#7c6cff;background:#191b3a}
+.lesson:disabled{opacity:.55}
 </style>
 </head>
+
 <body>
 <div class="wrap">
+
 <header>
 <div class="logo">ENGLISH <span>TRAINING OS</span></div>
 <div class="pill">LEVEL A1–A2</div>
 </header>
 
 <section class="card">
-  <div class="tag">📚 A1 · ВЫБОР УРОКА</div>
-  <h2>Твои уроки</h2>
-  <p>Выбери тему, которую хочешь изучить.</p>
+<div class="tag">📚 A1 · ВЫБОР УРОКА</div>
+<h2>Твои уроки</h2>
+<p>Выбери тему, которую хочешь изучить.</p>
 
-  <div class="lesson-list">
-    <button class="lesson active" onclick="selectLesson(0)">
-      <span>01 · Personal Pronouns</span>
-      <small>Личные местоимения · 15 заданий</small>
-    </button>
-
-    <button class="lesson" disabled>
-  <span>02 · To Be</span>
-  <small>Am / Is / Are · 20 заданий</small>
+<div class="lesson-list">
+<button class="lesson active" onclick="selectLesson(0)">
+<span>01 · Personal Pronouns</span>
+<small>Личные местоимения · 15 заданий</small>
 </button>
 
-    <button class="lesson" disabled>
-      <span>03 · Questions & Negatives</span>
-      <small>Вопросы и отрицания · 15 заданий</small>
-    </button>
+<button class="lesson" disabled>
+<span>02 · To Be</span>
+<small>Am / Is / Are · 20 заданий</small>
+</button>
 
-    <button class="lesson" disabled>
-      <span>04 · Have / Has</span>
-      <small>Обладание · 15 заданий</small>
-    </button>
-  </div>
+<button class="lesson" disabled>
+<span>03 · Questions & Negatives</span>
+<small>Вопросы и отрицания · 15 заданий</small>
+</button>
+
+<button class="lesson" disabled>
+<span>04 · Have / Has</span>
+<small>Обладание · 15 заданий</small>
+</button>
+</div>
 </section>
 
 <section class="card">
@@ -167,15 +97,13 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
 <div class="stat"><small>🎯 Правильно</small><strong id="correct">0</strong></div>
 <div class="stat"><small>📚 Задания</small><strong id="total">0</strong></div>
 </div>
+
 <div class="level-progress">
-  <small>⚡ Прогресс уровня</small>
-  <div class="level-bar">
-    <div id="levelFill"></div>
-  </div>
-  <small id="levelXP">0 / 100 XP</small>
+<small>⚡ Прогресс уровня</small>
+<div class="level-bar"><div id="levelFill"></div></div>
+<small id="levelXP">0 / 100 XP</small>
 </div>
 </section>
-
 
 <section class="card">
 <div class="tag" id="topic">GRAMMAR · A1</div>
@@ -191,6 +119,8 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
 </div>
 
 <script>
+const $=id=>document.getElementById(id);
+
 const tasks=[
 {q:"Как переводится I?",h:"Личное местоимение.",a:["Я","Ты","Он"],c:0,e:"I = я."},
 {q:"___ am happy.",h:"Я счастлив.",a:["He","I","They"],c:1,e:"С I используем am: I am happy."},
@@ -210,89 +140,121 @@ const tasks=[
 ];
 
 const saved=JSON.parse(localStorage.getItem("englishTrainingOS")||"{}");
-let i=saved.i||0,xp=saved.xp||0,correct=saved.correct||0,total=saved.total||0,answered=false;
+let i=saved.i||0;
+let xp=saved.xp||0;
+let correct=saved.correct||0;
+let total=saved.total||0;
+let answered=false;
+let activeLesson=0;
 
 function getLevel(){
- return Math.floor(xp/100)+1;
+return Math.floor(xp/100)+1;
 }
 
 function getLevelName(){
- const names=[
-  "🥚 Beginner",
-  "📘 Apprentice",
-  "⚔️ English Warrior",
-  "🔥 English Master",
-  "👑 English Legend"
- ];
- return names[getLevel()-1]||"👑 English Legend";
+const names=[
+"🥚 Beginner",
+"📘 Apprentice",
+"⚔️ English Warrior",
+"🔥 English Master",
+"👑 English Legend"
+];
+return names[getLevel()-1]||"👑 English Legend";
 }
 
 function updateLevel(){
- const levelXP=xp%100;
- $("levelFill").style.width=levelXP+"%";
- $("levelXP").textContent=levelXP+" / 100 XP";
- $("level").textContent=getLevelName();
+const levelXP=xp%100;
+$("levelFill").style.width=levelXP+"%";
+$("levelXP").textContent=levelXP+" / 100 XP";
+$("level").textContent=getLevelName();
 }
 
 function saveProgress(){
- localStorage.setItem("englishTrainingOS",JSON.stringify({i,xp,correct,total}));
+localStorage.setItem("englishTrainingOS",JSON.stringify({i,xp,correct,total}));
 }
-
-let activeLesson = 0;
 
 function selectLesson(number){
- if(number !== 0){
-  $("feedback").innerHTML =
-   '<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
-  return;
- }
-
- activeLesson = number;
-
- document.querySelectorAll(".lesson").forEach((btn,index)=>{
-  btn.classList.toggle("active",index===number);
- });
-
- i = 0;
- saveProgress();
- render();
+if(number!==0){
+$("feedback").innerHTML='<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
+return;
 }
-function render(){
-const t=tasks[i%tasks.length];answered=false;
-$("topic").textContent="GRAMMAR · A1 · "+(i+1);
-$("question").textContent=t.q;$("hint").textContent=t.h;
-$("feedback").innerHTML=""; $("next").disabled=true;
-$("bar").style.width=(i%tasks.length+1)/tasks.length*100+"%";
-$("answers").innerHTML="";
-t.a.forEach((a,n)=>{
-let b=document.createElement("button");b.className="answer";b.textContent=a;
-b.onclick=()=>check(n,b);$("answers").appendChild(b);
+
+activeLesson=number;
+
+document.querySelectorAll(".lesson").forEach((btn,index)=>{
+btn.classList.toggle("active",index===number);
 });
+
+i=0;
+saveProgress();
+render();
+}
+
+function render(){
+const t=tasks[i%tasks.length];
+answered=false;
+$("topic").textContent="GRAMMAR · A1 · "+(i%tasks.length+1);
+$("question").textContent=t.q;
+$("hint").textContent=t.h;
+$("feedback").innerHTML="";
+$("next").disabled=true;
+$("bar").style.width=((i%tasks.length+1)/tasks.length*100)+"%";
+$("answers").innerHTML="";
+
+t.a.forEach((a,n)=>{
+let b=document.createElement("button");
+b.className="answer";
+b.textContent=a;
+b.onclick=()=>check(n,b);
+$("answers").appendChild(b);
+});
+
 $("next").textContent="Следующее задание →";
 }
+
 function check(n,b){
-if(answered)return;answered=true;total++;
+if(answered)return;
+answered=true;
+total++;
+
 const t=tasks[i%tasks.length];
+
 document.querySelectorAll(".answer").forEach((el,k)=>{
-el.disabled=true;if(k===t.c)el.classList.add("good");
+el.disabled=true;
+if(k===t.c)el.classList.add("good");
 });
-if(n===t.c){xp+=10;correct++;$("feedback").innerHTML='<div class="feedback">🎉 <b>Правильно!</b><br>'+t.e+'<br>+10 XP</div>'}
-else{b.classList.add("bad");$("feedback").innerHTML='<div class="feedback">💡 <b>Разберём ошибку:</b><br>'+t.e+'</div>'}
+
+if(n===t.c){
+xp+=10;
+correct++;
+$("feedback").innerHTML='<div class="feedback">🎉 <b>Правильно!</b><br>'+t.e+'<br>+10 XP</div>';
+}else{
+b.classList.add("bad");
+$("feedback").innerHTML='<div class="feedback">💡 <b>Разберём ошибку:</b><br>'+t.e+'</div>';
+}
+
 $("xp").textContent=xp;
 $("correct").textContent=correct;
 $("total").textContent=total;
-$("next").disabled=false;
 updateLevel();
 saveProgress();
 $("next").disabled=false;
 }
-$("next").onclick=()=>{i++;saveProgress();render()};
+
+$("next").onclick=()=>{
+i++;
+saveProgress();
+render();
+};
+
 $("xp").textContent=xp;
 $("level").textContent=getLevelName();
 $("correct").textContent=correct;
 $("total").textContent=total;
- updateLevel();
+
+updateLevel();
 render();
 </script>
+
 </body>
 </html>
