@@ -83,7 +83,14 @@ const tasks=[
 {q:"She is ___ friend.",h:"Она моя подруга.",a:["mine","my","me"],c:1,e:"Перед существительным используем my: my friend."},
 {q:"We ___ from Russia.",h:"Мы из России.",a:["is","are","am"],c:1,e:"We are — мы есть / мы находимся."}
 ];
-let i=0,xp=0,correct=0,total=0,answered=false;
+
+const saved=JSON.parse(localStorage.getItem("englishTrainingOS")||"{}");
+let i=saved.i||0,xp=saved.xp||0,correct=saved.correct||0,total=saved.total||0,answered=false;
+
+function saveProgress(){
+ localStorage.setItem("englishTrainingOS",JSON.stringify({i,xp,correct,total}));
+}
+
 const $=id=>document.getElementById(id);
 function render(){
 const t=tasks[i%tasks.length];answered=false;
@@ -107,9 +114,10 @@ el.disabled=true;if(k===t.c)el.classList.add("good");
 if(n===t.c){xp+=10;correct++;$("feedback").innerHTML='<div class="feedback">🎉 <b>Правильно!</b><br>'+t.e+'<br>+10 XP</div>'}
 else{b.classList.add("bad");$("feedback").innerHTML='<div class="feedback">💡 <b>Разберём ошибку:</b><br>'+t.e+'</div>'}
 $("xp").textContent=xp;$("correct").textContent=correct;$("total").textContent=total;
+  saveProgress();
 $("next").disabled=false;
 }
-$("next").onclick=()=>{i++;render()};
+$("next").onclick=()=>{i++;saveProgress();render()};
 render();
 </script>
 </body>
