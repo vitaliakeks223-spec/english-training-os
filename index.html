@@ -84,6 +84,41 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
  border-radius:10px;
  transition:width .3s;
 }
+ 
+.lesson-list{
+ display:grid;
+ gap:10px;
+ margin-top:18px;
+}
+
+.lesson{
+ width:100%;
+ text-align:left;
+ padding:15px;
+ border:1px solid #293451;
+ border-radius:12px;
+ background:#10162b;
+ color:white;
+ cursor:pointer;
+}
+
+.lesson span{
+ display:block;
+ font-size:15px;
+ font-weight:700;
+}
+
+.lesson small{
+ display:block;
+ margin-top:6px;
+ color:#929cbd;
+}
+
+.lesson.active{
+ border-color:#7c6cff;
+ background:#191b3a;
+}
+
 </style>
 </head>
 <body>
@@ -93,7 +128,35 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
 <div class="pill">LEVEL A1–A2</div>
 </header>
 
-<section class="hero">
+<section class="card">
+  <div class="tag">📚 A1 · ВЫБОР УРОКА</div>
+  <h2>Твои уроки</h2>
+  <p>Выбери тему, которую хочешь изучить.</p>
+
+  <div class="lesson-list">
+    <button class="lesson active" onclick="selectLesson(0)">
+      <span>01 · Personal Pronouns</span>
+      <small>Личные местоимения · 15 заданий</small>
+    </button>
+
+    <button class="lesson" disabled>
+  <span>02 · To Be</span>
+  <small>Am / Is / Are · 20 заданий</small>
+</button>
+
+    <button class="lesson" disabled>
+      <span>03 · Questions & Negatives</span>
+      <small>Вопросы и отрицания · 15 заданий</small>
+    </button>
+
+    <button class="lesson" disabled>
+      <span>04 · Have / Has</span>
+      <small>Обладание · 15 заданий</small>
+    </button>
+  </div>
+</section>
+
+<section class="card">
 <div class="eyebrow">YOUR PERSONAL ENGLISH QUEST</div>
 <h1>Прокачиваем<br>твой английский 🚀</h1>
 <p>Учись, выполняй задания и получай опыт. Начинаем с простого.</p>
@@ -177,6 +240,45 @@ function saveProgress(){
 }
 
 const $=id=>document.getElementById(id);
+ let activeLesson = 0;
+
+function selectLesson(number){
+
+ if(number !== 0){
+  $("feedback").innerHTML =
+   '<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
+  return;
+ }
+
+ activeLesson = number;
+
+ document.querySelectorAll(".lesson").forEach((btn,index)=>{
+  btn.classList.toggle("active",index===number);
+ });
+
+ i = 0;
+ saveProgress();
+ render();
+}
+
+let activeLesson = 0;
+
+function selectLesson(number){
+ if(number !== 0){
+  $("feedback").innerHTML =
+   '<div class="feedback">🔒 Этот урок пока готовится. Скоро откроем!</div>';
+  return;
+ }
+
+ activeLesson = number;
+
+ document.querySelectorAll(".lesson").forEach((btn,index)=>{
+  btn.classList.toggle("active",index===number);
+ });
+
+ i = 0;
+ render();
+}
 function render(){
 const t=tasks[i%tasks.length];answered=false;
 $("topic").textContent="GRAMMAR · A1 · "+(i+1);
