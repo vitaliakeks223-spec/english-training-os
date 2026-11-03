@@ -159,6 +159,9 @@ $("total").textContent=total;
 updateLevel();
 saveProgress();
 $("next").disabled=false;
+updateLevel();
+saveProgress();
+$("next").disabled=false;
 }
 $("next").onclick=()=>{i++;saveProgress();render()};
 $("xp").textContent=xp;
