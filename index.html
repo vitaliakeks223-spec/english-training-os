@@ -37,6 +37,25 @@ button{cursor:pointer}
 .progress{height:7px;background:#26304a;border-radius:9px;margin-top:18px;overflow:hidden}
 .bar{height:100%;width:0;background:#8b83ff;transition:.3s}
 footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
+
+.level-progress{
+ margin-top:15px;
+}
+.level-bar{
+ height:10px;
+ background:#252538;
+ border-radius:10px;
+ overflow:hidden;
+ margin:8px 0;
+}
+#levelFill{
+ width:0%;
+ height:100%;
+ background:linear-gradient(90deg,#7c3aed,#06b6d4);
+ border-radius:10px;
+ transition:width .3s;
+}
+
 </style>
 </head>
 <body>
@@ -57,7 +76,6 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
 <div class="stat"><small>🎯 Правильно</small><strong id="correct">0</strong></div>
 <div class="stat"><small>📚 Задания</small><strong id="total">0</strong></div>
 </div>
- 
 <div class="level-progress">
   <small>⚡ Прогресс уровня</small>
   <div class="level-bar">
@@ -65,7 +83,6 @@ footer{text-align:center;color:#667292;font-size:12px;margin-top:28px}
   </div>
   <small id="levelXP">0 / 100 XP</small>
 </div>
-
 </section>
 
 
@@ -102,6 +119,14 @@ let i=saved.i||0,xp=saved.xp||0,correct=saved.correct||0,total=saved.total||0,an
 function getLevel(){
  return Math.floor(xp/100)+1;
 }
+ 
+function updateLevel(){
+ const levelXP=xp%100;
+ $("levelFill").style.width=levelXP+"%";
+ $("levelXP").textContent=levelXP+" / 100 XP";
+ $("level").textContent=getLevel();
+}
+
 
 function saveProgress(){
  localStorage.setItem("englishTrainingOS",JSON.stringify({i,xp,correct,total}));
@@ -139,6 +164,7 @@ $("xp").textContent=xp;
 $("level").textContent=getLevel();
 $("correct").textContent=correct;
 $("total").textContent=total;
+ updateLevel();
 
 render();
 
